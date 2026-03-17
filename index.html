@@ -1,12 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Support Leo</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
-</html>
+import { useState } from "react";
+
+export default function LittleLeoDonationPage() {
+  const donationLinks = {
+    venmo: "https://venmo.com/your-venmo-handle",
+    zelle: "mailto:yourzelle@email.com?subject=Donation%20for%20Leo",
+    gofundme:
+      "https://www.gofundme.com/f/support-little-leo-after-the-loss-of-his-mother",
+  };
+
+  // Replace these with hosted image URLs when deploying (e.g., /public folder or cloud storage)
+  const images = [
+    "/Shady and Leo 1.webp",
+    "/Shady and Leo 2.jpeg",
+    "/Shady and Leo 3.jpeg",
+    "/Shady and Leo 4.jpeg",
+    "/Shady and Leo 5.jpeg",
+  ];
+
+  const [current, setCurrent] = useState(0);
+
+  const next = () => setCurrent((prev) => (prev + 1) % images.length);
+  const prev = () =>
+    setCurrent((prev) => (prev - 1 + images.length) % images.length);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-rose-50 via-white to-sky-50 text-neutral-900">
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(251,113,133,0.16),_transparent_34%),radial-gradient(circle_at_top_right,_rgba(56,189,248,0.16),_transparent_32%)]" />
+
+        <div className="relative mx-auto max-w-6xl px-6 py-12 md:px-10 md:py-16">
+          <div className="grid gap-10 md:grid-cols-[1.1fr_0.9fr]">
+
+            {/* TEXT */}
+            <div className="flex flex-col justify-center">
+              <p className="mb-4 inline-flex w-fit rounded-full border border-rose-200 bg-white/80 px-4 py-1 text-sm font-medium text-rose-700 shadow-sm">
+                Supporting Leo and his family
+              </p>
+              <h1 className="text-4xl font-semibold tracking-tight md:text-6xl">
+                Support Little Leo After the Loss of His Mother
+              </h1>
+              <p className="mt-6 text-lg text-neutral-700">
+                At just 4 years old, Leo has experienced a heartbreaking loss after the passing of his mother, Shady. This page was created to support Leo and his family during this incredibly difficult time.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href={donationLinks.venmo}
+                  className="rounded-2xl bg-rose-500 px-5 py-3 text-white shadow-lg"
+                >
+                  Donate via Venmo
+                </a>
+                <a
+                  href={donationLinks.zelle}
+                  className="rounded-2xl bg-sky-500 px-5 py-3 text-white shadow-lg"
+                >
+                  Donate via Zelle
+                </a>
+              </div>
+            </div>
+
+            {/* IMAGE CAROUSEL */}
+            <div className="relative">
+              <div className="relative overflow-hidden rounded-3xl shadow-2xl">
+                <img
+                  src={images[current]}
+                  alt="Shady and Leo"
+                  className="h-[420px] w-full object-cover md:h-[520px]"
+                />
+
+                {/* LEFT BUTTON */}
+                <button
+                  onClick={prev}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 shadow hover:bg-white"
+                >
+                  ◀
+                </button>
+
+                {/* RIGHT BUTTON */}
+                <button
+                  onClick={next}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 shadow hover:bg-white"
+                >
+                  ▶
+                </button>
+              </div>
+
+              {/* DOTS */}
+              <div className="mt-4 flex justify-center gap-2">
+                {images.map((_, i) => (
+                  <div
+                    key={i}
+                    className={`h-2 w-2 rounded-full ${
+                      i === current ? "bg-rose-500" : "bg-neutral-300"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* DONATION SECTION */}
+      <section className="mx-auto max-w-5xl px-6 py-10">
+        <div className="rounded-3xl border border-amber-200 bg-amber-50 p-8 shadow">
+          <h2 className="text-2xl font-semibold">Donate via GoFundMe</h2>
+          <p className="mt-3 text-neutral-700">
+            A GoFundMe is also available for those who prefer using a platform.
+          </p>
+          <a
+            href={donationLinks.gofundme}
+            className="mt-4 inline-block rounded-2xl border bg-white px-5 py-3"
+          >
+            Open GoFundMe
+          </a>
+        </div>
+      </section>
+
+      <footer className="border-t bg-white py-6 text-center text-sm text-neutral-500">
+        Built in loving memory of Shady ❤️
+      </footer>
+    </div>
+  );
+}

@@ -1,0 +1,15 @@
+{
+<<<<<<< HEAD
+  "version": 2,
+  "framework": null,
+  "buildCommand": "",
+  "outputDirectory": ".",
+  "builds": [
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "images/**", "use": "@vercel/static" }
+  ]
+=======
+  "buildCommand": null,
+  "outputDirectory": "."
+>>>>>>> 886cfbf02cd31e907fbd1f757f21c8c4525c936b
+}

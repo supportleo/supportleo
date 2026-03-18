@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support Little Leo</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --rose: #e8736a;
+    --rose-light: #fdf1ef;
+    --rose-mid: #f2c4be;
+    --sky: #6ab0d4;
+    --warm: #f5f0e8;
+    --text: #2a1f1a;
+    --muted: #7a6b65;
+    --border: rgba(232,115,106,0.15);
+    --shadow: 0 4px 24px rgba(42,31,26,0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm);
+    color: var(--text);
+    padding-top: 82px;
+  }
+
+  /* STICKY BAR */
+  .sticky-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: linear-gradient(135deg, #d9605a 0%, #b84d6e 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 11px 20px 10px;
+    box-shadow: 0 3px 20px rgba(180,60,100,0.4);
+  }
+
+  .bar-top-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+
+  .bar-divider {
+    width: 1px; height: 22px;
+    background: rgba(255,255,255,0.3);
+    flex-shrink: 0;
+  }
+
+  .bar-fee {
+    font-size: 11px;
+    opacity: 0.85;
+    text-align: center;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+  }
+
+  .btn-venmo {
+    background: white; color: #0070e0; border: none; border-radius: 100px;
+    padding: 8px 16px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+    cursor: pointer; text-decoration: none; transition: transform 0.15s, box-shadow 0.15s;
+    display: inline-flex; align-items: center; gap: 5px; white-space: nowrap;
+  }
+  .btn-venmo:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+
+  .btn-zelle {
+    background: white; color: #6d1ed4; border: none; border-radius: 100px;
+    padding: 8px 16px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+    cursor: pointer; text-decoration: none; transition: transform 0.15s, box-shadow 0.15s;
+    display: inline-flex; align-items: center; gap: 5px; white-space: nowrap;
+  }
+  .btn-zelle:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+
+  .btn-gfm-bar {
+    background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.65);
+    border: 1px solid rgba(255,255,255,0.25); border-radius: 100px;
+    padding: 8px 14px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 400;
+    cursor: pointer; text-decoration: none; white-space: nowrap;
+    display: inline-flex; align-items: center;
+    transition: background 0.15s;
+  }
+  .btn-gfm-bar:hover { background: rgba(255,255,255,0.22); color: rgba(255,255,255,0.8); }
+
+  /* HERO */
+  .hero {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+    max-width: 1100px; margin: 0 auto; padding: 60px 32px 52px;
+    align-items: center;
+  }
+
+  .hero-text .eyebrow {
+    font-size: 12px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--rose); margin-bottom: 14px;
+  }
+
+  .hero-text h1 {
+    font-family: 'Lora', serif; font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.2; color: var(--text); margin-bottom: 14px;
+  }
+  .hero-text h1 em { font-style: italic; color: var(--rose); }
+
+  .hero-text .subtitle {
+    font-size: 17px; color: var(--muted); line-height: 1.6;
+    margin-bottom: 28px; font-weight: 300;
+  }
+
+  .hero-cta { display: flex; flex-direction: column; gap: 12px; }
+  .cta-primary { display: flex; flex-direction: column; gap: 10px; }
+
+  .btn-big-venmo {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: #008CFF; color: white; border: none; border-radius: 100px;
+    padding: 16px 32px; font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(0,140,255,0.3);
+  }
+  .btn-big-venmo:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,140,255,0.4); }
+
+  .btn-big-zelle {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: linear-gradient(135deg, #6d1ed4, #9b35e8); color: white;
+    border: none; border-radius: 100px; padding: 16px 32px;
+    font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(109,30,212,0.3);
+  }
+  .btn-big-zelle:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(109,30,212,0.4); }
+
+  .direct-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #e8f7ef; color: #2a7a4f; font-size: 13px; font-weight: 500;
+    padding: 7px 14px; border-radius: 100px; width: fit-content;
+  }
+
+  .gfm-link-small {
+    color: var(--muted); font-size: 13px; text-decoration: none;
+    border-bottom: 1px dotted var(--muted);
+  }
+  .gfm-link-small:hover { color: var(--text); }
+
+  /* CAROUSEL */
+  .carousel-wrap {
+    position: relative; border-radius: 20px; overflow: hidden;
+    box-shadow: 0 16px 56px rgba(42,31,26,0.15); aspect-ratio: 4/5; background: #f0e8e4;
+  }
+  .carousel-track {
+    display: flex; width: 100%; height: 100%;
+    transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+  .carousel-slide { min-width: 100%; height: 100%; overflow: hidden; }
+  .carousel-slide img {
+    width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block;
+  }
+  .carousel-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.9); border: none; border-radius: 50%;
+    width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 16px; transition: background 0.15s, transform 0.15s; z-index: 5;
+  }
+  .carousel-btn:hover { background: white; transform: translateY(-50%) scale(1.05); }
+  .carousel-btn.prev { left: 12px; }
+  .carousel-btn.next { right: 12px; }
+  .carousel-dots {
+    position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 6px; z-index: 5;
+  }
+  .carousel-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: rgba(255,255,255,0.5); cursor: pointer;
+    transition: background 0.2s, transform 0.2s; border: none;
+  }
+  .carousel-dot.active { background: white; transform: scale(1.3); }
+
+  /* MEMORIAL */
+  .memorial-section { max-width: 760px; margin: 0 auto; padding: 0 32px 64px; }
+  .memorial-card {
+    background: white; border-radius: 20px; padding: 48px 56px;
+    box-shadow: var(--shadow); border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .memorial-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--rose), #c25b7a, var(--sky));
+  }
+  .memorial-label {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--rose); margin-bottom: 20px;
+  }
+  .memorial-card p {
+    font-family: 'Lora', serif; font-size: 17px; line-height: 1.85;
+    color: #3a2e2a; margin-bottom: 20px;
+  }
+  .memorial-card p:last-child { margin-bottom: 0; }
+  .heart-quote {
+    font-family: 'Lora', serif; font-size: 20px; font-style: italic;
+    color: var(--rose); text-align: center;
+    padding: 24px 0 8px; border-top: 1px solid var(--border); margin-top: 8px;
+  }
+
+  /* SHARE */
+  .share-section {
+    background: var(--rose-light);
+    border-top: 1px solid var(--rose-mid); border-bottom: 1px solid var(--rose-mid);
+    padding: 40px 32px; text-align: center;
+  }
+  .share-inner { max-width: 520px; margin: 0 auto; }
+  .share-title { font-family: 'Lora', serif; font-size: 20px; color: var(--text); margin-bottom: 8px; }
+  .share-sub { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
+  .share-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .btn-share {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 22px; border-radius: 100px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .btn-share:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.12); }
+  .btn-copy { background: white; color: var(--rose); border: 1.5px solid var(--rose-mid); }
+  .btn-sms { background: #34c759; color: white; }
+  .copy-confirm {
+    font-size: 12px; color: #2a7a4f; margin-top: 10px; opacity: 0; transition: opacity 0.3s;
+  }
+
+  /* ZELLE */
+  .zelle-section { background: linear-gradient(135deg, #f3eeff 0%, #e8eeff 100%); padding: 64px 32px; }
+  .zelle-inner { max-width: 600px; margin: 0 auto; text-align: center; }
+  .section-label {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #6d1ed4; margin-bottom: 12px;
+  }
+  .zelle-section h2 { font-family: 'Lora', serif; font-size: 32px; color: var(--text); margin-bottom: 12px; }
+  .zelle-section p { color: var(--muted); font-size: 16px; line-height: 1.6; margin-bottom: 32px; }
+  .qr-placeholder {
+    width: 200px; height: 200px; border-radius: 16px; margin: 0 auto 24px;
+    background: #ede9f6; display: flex; align-items: center; justify-content: center;
+    border: 2px dashed #b09dd4; color: #9580c4; font-size: 13px; text-align: center;
+    line-height: 1.5; padding: 16px;
+  }
+  .zelle-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: white; border: 1.5px solid #b09dd4; border-radius: 100px;
+    padding: 10px 20px; font-size: 14px; font-weight: 500; color: #6d1ed4;
+  }
+
+  /* INFO CARDS */
+  .info-section { max-width: 1100px; margin: 0 auto; padding: 72px 32px; }
+  .info-section h2 {
+    font-family: 'Lora', serif; font-size: 30px; color: var(--text);
+    text-align: center; margin-bottom: 40px;
+  }
+  .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .info-card {
+    background: white; border-radius: 16px; padding: 32px;
+    box-shadow: var(--shadow); border: 1px solid var(--border);
+  }
+  .info-card .icon { font-size: 28px; margin-bottom: 16px; display: block; }
+  .info-card h3 { font-family: 'Lora', serif; font-size: 18px; margin-bottom: 10px; color: var(--text); }
+  .info-card p { font-size: 14px; line-height: 1.7; color: var(--muted); }
+
+  /* GOFUNDME */
+  .gfm-section {
+    background: #f9f6f0; border-top: 1px solid var(--border);
+    padding: 56px 32px; text-align: center;
+  }
+  .gfm-inner { max-width: 480px; margin: 0 auto; }
+  .gfm-badge {
+    display: inline-block; background: #fff3e8; color: #b06020;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 5px 14px; border-radius: 100px; margin-bottom: 16px;
+  }
+  .gfm-section h2 { font-family: 'Lora', serif; font-size: 26px; color: var(--text); margin-bottom: 10px; }
+  .gfm-section p { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
+  .btn-gfm-main {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #f5a623; color: white; text-decoration: none;
+    padding: 14px 32px; border-radius: 100px;
+    font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 16px rgba(245,166,35,0.35);
+  }
+  .btn-gfm-main:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,166,35,0.45); }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 32px; font-size: 13px;
+    color: var(--muted); border-top: 1px solid var(--border);
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    body { padding-top: 95px; }
+    .hero { grid-template-columns: 1fr; gap: 28px; padding: 28px 20px 44px; }
+    .carousel-wrap { aspect-ratio: 3/4; }
+    .memorial-card { padding: 32px 24px; }
+    .memorial-card p { font-size: 16px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .info-section, .memorial-section { padding-left: 20px; padding-right: 20px; }
+    .share-section { padding: 32px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- STICKY BAR -->
+<div class="sticky-bar">
+  <div class="bar-top-row">
+    <a href="venmo://paycharge?txn=pay&recipients=Giselle-canino&note=Support%20Leo" id="venmo-btn" class="btn-venmo">💙 Venmo</a>
+    <a href="#zelle" class="btn-zelle">💜 Zelle</a>
+    <div class="bar-divider"></div>
+    <a href="https://gofundme.com" target="_blank" class="btn-gfm-bar">GoFundMe</a>
+  </div>
+  <div class="bar-fee">✅ Venmo &amp; Zelle = 100% to family &nbsp;·&nbsp; GoFundMe may take fees</div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="eyebrow">In loving memory of Shady Prestol</div>
+    <h1>Support Little <em>Leo</em> After the Loss of His Mother</h1>
+    <p class="subtitle">Supporting Leo and his family as they navigate life after losing Shady — a mother full of love, adventure, and heart.</p>
+    <div class="hero-cta">
+      <div class="cta-primary">
+        <a href="venmo://paycharge?txn=pay&recipients=Giselle-canino&note=Support%20Leo" id="venmo-hero-btn" class="btn-big-venmo">💙 Donate via Venmo @Giselle-canino</a>
+        <a href="#zelle" class="btn-big-zelle">💜 Donate via Zelle</a>
+      </div>
+      <div class="direct-badge">✅ 100% of funds go directly to the family</div>
+      <div>
+        <a href="#gofundme" class="gfm-link-small">Also available on GoFundMe (platform fees may apply)</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAROUSEL -->
+  <div class="carousel-wrap">
+    <div class="carousel-track" id="track">
+      <div class="carousel-slide"><img src="images/Shady_and_Leo_1.webp" alt="Shady and Leo" /></div>
+      <div class="carousel-slide"><img src="images/Shady_and_Leo_2.jpeg" alt="Shady and Leo" /></div>
+      <div class="carousel-slide"><img src="images/Shady_and_Leo_3.jpeg" alt="Shady and Leo" /></div>
+      <div class="carousel-slide"><img src="images/Shady_and_Leo_4.jpeg" alt="Shady and Leo" /></div>
+      <div class="carousel-slide"><img src="images/Shady_and_Leo_5.jpeg" alt="Shady and Leo" /></div>
+    </div>
+    <button class="carousel-btn prev" onclick="move(-1)">&#8592;</button>
+    <button class="carousel-btn next" onclick="move(1)">&#8594;</button>
+    <div class="carousel-dots" id="dots"></div>
+  </div>
+</section>
+
+<!-- MEMORIAL TEXT -->
+<section class="memorial-section">
+  <div class="memorial-card">
+    <div class="memorial-label">A message from Emilie Faro</div>
+    <p>Hello, my name is Emilie Faro and I'm starting a collection for my dearest friend's son.</p>
+    <p>At just 4 years old, Leandro "Leo" Canino Prestol has experienced a loss no child should ever have to face. Leo recently lost his beloved mother, Shady Prestol, after her courageous battle with RET fusion non-small cell lung cancer (NSCLC).</p>
+    <p>Shady was the kind of person who truly lived life to the fullest. She embraced every moment with energy, love, and a deep appreciation for adventure. Together with her wife, Giselle Canino, she built a beautiful life centered around family, joy, and exploration. Whether it was traveling, discovering new places, or simply making everyday moments special, Shady and Giselle made sure that Leo's world was filled with love, laughter, and unforgettable experiences.</p>
+    <p>Now, as Leo and Giselle navigate this heartbreaking loss, we are coming together to support them during this incredibly difficult time. Donations will help ease the financial burden of daily living expenses, childcare, and future needs, allowing Giselle to focus on providing stability, love, and care for Leo as he grows.</p>
+    <p>Any contribution—big or small—will make a meaningful difference in Leo's life and help honor Shady's legacy of love and adventure. To love Shady is to love Leandro ❤️. He will be turning 5 on May 16th; this collection will be ongoing through the year.</p>
+    <p>If you're unable to donate, sharing this page and keeping Leo and Giselle in your thoughts means just as much.</p>
+    <p>Let's come together to support Leo and carry forward the beautiful life and love that Shady created.</p>
+    <div class="heart-quote">"To love Shady is to love Leandro ❤️"</div>
+  </div>
+</section>
+
+<!-- SHARE -->
+<section class="share-section">
+  <div class="share-inner">
+    <div class="share-title">Can't donate right now? Please share 💛</div>
+    <p class="share-sub">Sharing this page with even one person could make a real difference for Leo and Giselle.</p>
+    <div class="share-btns">
+      <button class="btn-share btn-copy" onclick="copyLink()">🔗 Copy link</button>
+      <a class="btn-share btn-sms" id="sms-btn" href="#">💬 Share via text</a>
+    </div>
+    <div class="copy-confirm" id="copy-confirm">✅ Link copied to clipboard!</div>
+  </div>
+</section>
+
+<!-- ZELLE -->
+<section class="zelle-section" id="zelle">
+  <div class="zelle-inner">
+    <div class="section-label">Direct · Zero fees</div>
+    <h2>Donate through Zelle</h2>
+    <p>Zelle transfers go directly to Giselle Canino. 100% of every dollar reaches the family — no processing fees, no delays.</p>
+    <div class="qr-placeholder">
+      📱 Add your Zelle QR code here<br><br>
+      <small>Replace this placeholder with your Zelle QR code image</small>
+    </div>
+    <div class="zelle-badge">💜 Goes directly to Giselle Canino · 100% to family</div>
+  </div>
+</section>
+
+<!-- INFO CARDS -->
+<section class="info-section">
+  <h2>How your support helps</h2>
+  <div class="cards-grid">
+    <div class="info-card">
+      <span class="icon">💙</span>
+      <h3>Why Venmo &amp; Zelle first?</h3>
+      <p>Venmo and Zelle are direct transfers — every dollar goes straight to Giselle with no platform fees. Your full contribution reaches Leo's family immediately.</p>
+    </div>
+    <div class="info-card">
+      <span class="icon">🏡</span>
+      <h3>What your donation covers</h3>
+      <p>Funds help with daily living expenses, childcare costs, and Leo's future needs — giving Giselle the freedom to focus fully on being present for Leo as he grows.</p>
+    </div>
+    <div class="info-card">
+      <span class="icon">🧡</span>
+      <h3>GoFundMe is also available</h3>
+      <p>GoFundMe is a trusted secondary option. Please note that GoFundMe may deduct platform and processing fees before funds reach the family.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GOFUNDME -->
+<section class="gfm-section" id="gofundme">
+  <div class="gfm-inner">
+    <span class="gfm-badge">Secondary option · fees may apply</span>
+    <h2>Also on GoFundMe</h2>
+    <p>If you prefer GoFundMe, you're welcome to donate there as well. Please be aware that GoFundMe deducts platform fees — so for the full amount to reach Leo's family, Venmo or Zelle are preferred.</p>
+    <a href="https://gofundme.com" target="_blank" class="btn-gfm-main">Donate on GoFundMe</a>
+  </div>
+</section>
+
+<footer>
+  <p>Made with love in support of Leo &amp; Giselle Canino &nbsp;·&nbsp; In memory of Shady Prestol ❤️</p>
+</footer>
+
+<script>
+  // Carousel
+  let cur = 0;
+  const total = 5;
+  const track = document.getElementById('track');
+  const dotsEl = document.getElementById('dots');
+
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('button');
+    d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  }
+
+  function goTo(n) {
+    cur = (n + total) % total;
+    track.style.transform = 'translateX(-' + (cur * 100) + '%)';
+    document.querySelectorAll('.carousel-dot').forEach((d,i) => {
+      d.classList.toggle('active', i === cur);
+    });
+  }
+
+  function move(dir) { goTo(cur + dir); }
+  setInterval(() => move(1), 4500);
+
+  // Copy link
+  function copyLink() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      const el = document.getElementById('copy-confirm');
+      el.style.opacity = '1';
+      setTimeout(() => el.style.opacity = '0', 2500);
+    });
+  }
+
+  // Venmo deep link: try app first, fall back to web on desktop
+  function setupVenmo(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('click', function(e) {
+      e.preventDefault();
+      const appUrl = 'venmo://paycharge?txn=pay&recipients=Giselle-canino&note=Support%20Leo';
+      const webUrl = 'https://venmo.com/Giselle-canino';
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        // Try to open app; if it doesn't open within 1.5s fall back to web
+        window.location = appUrl;
+        setTimeout(() => { window.location = webUrl; }, 1500);
+      } else {
+        window.open(webUrl, '_blank');
+      }
+    });
+  }
+  setupVenmo('venmo-btn');
+  setupVenmo('venmo-hero-btn');
+
+  // SMS share with current URL
+  document.getElementById('sms-btn').href =
+    'sms:?body=' + encodeURIComponent('Please help support little Leo after the loss of his mother: ' + window.location.href);
+</script>
+</body>
+</html>
